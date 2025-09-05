@@ -1,3 +1,7 @@
+// Multer saves the file temporarily in ./public/temp.
+// Cloudinary picks that file from local storage and uploads it to the cloud.
+// After successful upload, you usually delete the temp file (optional).
+
 import multer from "multer";
 const storage = multer.diskStorage({
     destination: function(req,file,cb){

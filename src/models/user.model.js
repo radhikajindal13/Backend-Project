@@ -31,13 +31,13 @@ const userSchema = new mongoose.Schema(
         },
         avatar:{
             type:"String",         // cloudinary url
-            required:true
+            // required:true
         },
         coverImage:{
             type:"String",        //cloudinary url
         }, 
         watchHistory:{
-            type:Schema.Types.ObjectId,
+            type:mongoose.Schema.Types.ObjectId,
             ref:"Video"
         },
         refreshToken:{
@@ -51,7 +51,7 @@ const userSchema = new mongoose.Schema(
 // pre is a hook in middleware, that does something before "Save"
 userSchema.pre("save",async function(next){
     if(!this.isModified("password")) return next();
-    this.password=bcrypt.hash(this.password,10); 
+    this.password=await bcrypt.hash(this.password,10); 
     next();
 })
 
