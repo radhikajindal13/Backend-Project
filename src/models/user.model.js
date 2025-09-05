@@ -31,14 +31,14 @@ const userSchema = new mongoose.Schema(
         },
         avatar:{
             type:"String",         // cloudinary url
-            // required:true
+            required:true
         },
-        coverImage:{
+        coverimage:{
             type:"String",        //cloudinary url
         }, 
         watchHistory:{
             type:mongoose.Schema.Types.ObjectId,
-            ref:"Video"
+            ref:"Video",
         },
         refreshToken:{
             type:"String"

@@ -31,26 +31,33 @@ const registerUser = asyncHandler(async (req,res)=>{
     }
 
     // req.body contains all the data that client provided(does not handle files and urls)
-    //multer gives req.files access
+    // multer gives req.files access
 
-    // const avatarLocalFilePath = req.files?.avatar[0]?.path;
+    console.log(req.files);
+    
+    const avatarLocalFilePath = req.files?.avatar[0]?.path;
     // const coverImageLocalFilePath = req.files?.coverimage[0]?.path;
 
-    // if(!avatarLocalFilePath)
-    // {
-    //     throw new ApiError(400,"Avatar file is required")
-    // }
+    let coverImageLocalFilePath;
+    if(req.files && Array.isArray(req.files.coverimage) && req.files.coverimage.length()>0)
+        coverImageLocalFilePath=req.files.coverimage[0].path;
 
-    // const avatar = await uploadOnCloudinary(avatarLocalFilePath);
-    // const coverimage = await uploadOnCloudinary(coverImageLocalFilePath);
+
+    if(!avatarLocalFilePath)
+    {
+        throw new ApiError(400,"Avatar file is required")
+    }
+
+    const avatar = await uploadOnCloudinary(avatarLocalFilePath);
+    const coverimage = await uploadOnCloudinary(coverImageLocalFilePath);
     
-    // if(!avatar)
-    //     throw new ApiError(400,"Avatar file is required")
+    if(!avatar)
+        throw new ApiError(400,"Avatar file is required")
 
     const user = await User.create({
         fullname,
-        // avatar:avatar?.url || "",
-        // coverimage:coverimage?.url || "",
+        avatar:avatar?.url || "",
+        coverimage: coverimage?.url || "" ,
         email,
         password,
         username:username.toLowerCase(),
