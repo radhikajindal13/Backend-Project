@@ -40,9 +40,10 @@ const userSchema = new mongoose.Schema(
             type:mongoose.Schema.Types.ObjectId,
             ref:"Video",
         },
-        refreshToken:{
+        refreshToken:{         // long lived
             type:"String"
         }
+        // access token -> short lived
     },
     {
         timestamps:true
